@@ -1,0 +1,89 @@
+Select ID.WGUID, T1.Packagename as Package1 , T2.Packagename as Package2, T3.Packagename as Package3 , T4.Packagename as Package4 From 
+(((((Select WGUID  from  SAGUIDS) AS ID  LEFT JOIN 
+
+( Select * from (Select T0.*, (SELECT COUNT(*) AS ROWNUM FROM (SELECT  top 4  PACKAGENAME , LASTUSE, UNUSEDAYS,PACKAGEGUID, WGUID, INSTALLSIZE
+                                                                                   FROM (Select PACKAGENAME, MOD_DATE,PACKAGEGUID, LASTUSE, DATEDIFF('d', lastuse, now()) AS UNUSEDAYS, WGUID, INSTALLSIZE
+                                                                                   from (Select D.PACKAGEGUID, C.LASTUSE, D.PACKAGENAME, D.MOD_DATE, D.WGUID, D.INSTALLSIZE
+                                                                                   from (select  A.PACKAGEGUID, B.STRVALUE  as PACKAGENAME , A.MOD_DATE, A.WGUID, A.INSTALLSIZE FROM (SELECT PACKAGEGUID, PACKAGE, MOD_DATE, WGUID, INSTALLSIZE  FROM SASFW) AS A LEFT JOIN SASTR AS B on A.PACKAGE =  B.STRINGID)  AS D  LEFT JOIN SASFWUSE AS C ON C.PACKAGEGUID = D.PACKAGEGUID) as E) as F  WHERE F.UNUSEDAYS >10 
+                                                                                    ORDER BY F.unusedays DESC,F.installsize DESC) as R0 
+                                                                                 where R0.installsize>=T0.installsize
+) as ROWNUMBER from
+
+                                                                                (  SELECT  top 4 PACKAGENAME , LASTUSE, UNUSEDAYS,PACKAGEGUID,WGUID, INSTALLSIZE
+                                                                                  FROM (Select PACKAGENAME, MOD_DATE, PACKAGEGUID, LASTUSE, DATEDIFF('d', lastuse, now()) AS UNUSEDAYS,WGUID, INSTALLSIZE
+                                                                                  from (Select D.PACKAGEGUID, C.LASTUSE, D.PACKAGENAME, D.MOD_DATE,D.WGUID, D.INSTALLSIZE
+                                                                                  from (select  A.PACKAGEGUID, B.STRVALUE  as PACKAGENAME , A.MOD_DATE ,A.WGUID, A.INSTALLSIZE FROM (SELECT PACKAGEGUID, PACKAGE, MOD_DATE,WGUID, INSTALLSIZE  FROM SASFW) AS A LEFT JOIN SASTR AS B on A.PACKAGE =  B.STRINGID)  AS D  LEFT JOIN SASFWUSE AS C ON C.PACKAGEGUID = D.PACKAGEGUID) as E) as F  WHERE F.UNUSEDAYS >10 
+                                                                                  ORDER BY F.unusedays DESC, F.installsize DESC
+                                                                    ) AS T0) as T0
+Where rownumber = 1
+
+) as T1
+
+on ID.WGUID =T1.WGUID)
+
+LEFT JOIN 
+
+( Select * from (Select T0.*, (SELECT COUNT(*) AS ROWNUM FROM (SELECT  top 4 PACKAGENAME , LASTUSE, UNUSEDAYS,PACKAGEGUID, WGUID, INSTALLSIZE
+                                                                                   FROM (Select PACKAGENAME, MOD_DATE,PACKAGEGUID, LASTUSE, DATEDIFF('d', lastuse, now()) AS UNUSEDAYS, WGUID, INSTALLSIZE
+                                                                                   from (Select D.PACKAGEGUID, C.LASTUSE, D.PACKAGENAME, D.MOD_DATE, D.WGUID, D.INSTALLSIZE
+                                                                                   from (select  A.PACKAGEGUID, B.STRVALUE  as PACKAGENAME , A.MOD_DATE, A.WGUID, A.INSTALLSIZE FROM (SELECT PACKAGEGUID, PACKAGE, MOD_DATE, WGUID, INSTALLSIZE  FROM SASFW) AS A LEFT JOIN SASTR AS B on A.PACKAGE =  B.STRINGID)  AS D  LEFT JOIN SASFWUSE AS C ON C.PACKAGEGUID = D.PACKAGEGUID) as E) as F  WHERE F.UNUSEDAYS >10 
+                                                                                    ORDER BY F.unusedays DESC,F.installsize DESC) as R0 
+                                                                                 where R0.installsize>=T0.installsize
+) as ROWNUMBER from
+
+                                                                                (  SELECT  top 4  PACKAGENAME , LASTUSE, UNUSEDAYS,PACKAGEGUID,WGUID, INSTALLSIZE
+                                                                                  FROM (Select PACKAGENAME, MOD_DATE, PACKAGEGUID, LASTUSE, DATEDIFF('d', lastuse, now()) AS UNUSEDAYS,WGUID, INSTALLSIZE
+                                                                                  from (Select D.PACKAGEGUID, C.LASTUSE, D.PACKAGENAME, D.MOD_DATE,D.WGUID, D.INSTALLSIZE
+                                                                                  from (select  A.PACKAGEGUID, B.STRVALUE  as PACKAGENAME , A.MOD_DATE ,A.WGUID, A.INSTALLSIZE FROM (SELECT PACKAGEGUID, PACKAGE, MOD_DATE,WGUID, INSTALLSIZE  FROM SASFW) AS A LEFT JOIN SASTR AS B on A.PACKAGE =  B.STRINGID)  AS D  LEFT JOIN SASFWUSE AS C ON C.PACKAGEGUID = D.PACKAGEGUID) as E) as F  WHERE F.UNUSEDAYS >10 
+                                                                                  ORDER BY F.unusedays DESC, F.installsize DESC
+                                                                    ) AS T0) as T0
+Where rownumber = 2
+
+) as T2
+
+on ID.WGUID =T2.WGUID)
+
+LEFT JOIN 
+
+( Select * from (Select T0.*, (SELECT COUNT(*) AS ROWNUM FROM (SELECT  top 4  PACKAGENAME , LASTUSE, UNUSEDAYS,PACKAGEGUID, WGUID, INSTALLSIZE
+                                                                                   FROM (Select PACKAGENAME, MOD_DATE,PACKAGEGUID, LASTUSE, DATEDIFF('d', lastuse, now()) AS UNUSEDAYS, WGUID, INSTALLSIZE
+                                                                                   from (Select D.PACKAGEGUID, C.LASTUSE, D.PACKAGENAME, D.MOD_DATE, D.WGUID, D.INSTALLSIZE
+                                                                                   from (select  A.PACKAGEGUID, B.STRVALUE  as PACKAGENAME , A.MOD_DATE, A.WGUID, A.INSTALLSIZE FROM (SELECT PACKAGEGUID, PACKAGE, MOD_DATE, WGUID, INSTALLSIZE  FROM SASFW) AS A LEFT JOIN SASTR AS B on A.PACKAGE =  B.STRINGID)  AS D  LEFT JOIN SASFWUSE AS C ON C.PACKAGEGUID = D.PACKAGEGUID) as E) as F  WHERE F.UNUSEDAYS >10 
+                                                                                    ORDER BY F.unusedays DESC,F.installsize DESC) as R0 
+                                                                                 where  R0.installsize>=T0.installsize
+) as ROWNUMBER from
+
+                                                                                (  SELECT  top 4  PACKAGENAME , LASTUSE, UNUSEDAYS,PACKAGEGUID,WGUID, INSTALLSIZE
+                                                                                  FROM (Select PACKAGENAME, MOD_DATE, PACKAGEGUID, LASTUSE, DATEDIFF('d', lastuse, now()) AS UNUSEDAYS,WGUID, INSTALLSIZE
+                                                                                  from (Select D.PACKAGEGUID, C.LASTUSE, D.PACKAGENAME, D.MOD_DATE,D.WGUID, D.INSTALLSIZE
+                                                                                  from (select  A.PACKAGEGUID, B.STRVALUE  as PACKAGENAME , A.MOD_DATE ,A.WGUID, A.INSTALLSIZE FROM (SELECT PACKAGEGUID, PACKAGE, MOD_DATE,WGUID, INSTALLSIZE  FROM SASFW) AS A LEFT JOIN SASTR AS B on A.PACKAGE =  B.STRINGID)  AS D  LEFT JOIN SASFWUSE AS C ON C.PACKAGEGUID = D.PACKAGEGUID) as E) as F  WHERE F.UNUSEDAYS >10 
+                                                                                  ORDER BY F.unusedays DESC, F.installsize DESC
+                                                                    ) AS T0) as T0
+Where rownumber = 3
+
+) as T3
+
+on ID.WGUID =T3.WGUID)
+LEFT JOIN 
+
+( Select * from (Select T0.*, (SELECT COUNT(*) AS ROWNUM FROM (SELECT  top 4  PACKAGENAME , LASTUSE, UNUSEDAYS,PACKAGEGUID, WGUID, INSTALLSIZE
+                                                                                   FROM (Select PACKAGENAME, MOD_DATE,PACKAGEGUID, LASTUSE, DATEDIFF('d', lastuse, now()) AS UNUSEDAYS, WGUID, INSTALLSIZE
+                                                                                   from (Select D.PACKAGEGUID, C.LASTUSE, D.PACKAGENAME, D.MOD_DATE, D.WGUID, D.INSTALLSIZE
+                                                                                   from (select  A.PACKAGEGUID, B.STRVALUE  as PACKAGENAME , A.MOD_DATE, A.WGUID, A.INSTALLSIZE FROM (SELECT PACKAGEGUID, PACKAGE, MOD_DATE, WGUID, INSTALLSIZE  FROM SASFW) AS A LEFT JOIN SASTR AS B on A.PACKAGE =  B.STRINGID)  AS D  LEFT JOIN SASFWUSE AS C ON C.PACKAGEGUID = D.PACKAGEGUID) as E) as F  WHERE F.UNUSEDAYS >10 
+                                                                                    ORDER BY F.unusedays DESC,F.installsize DESC) as R0 
+                                                                                 where  R0.installsize>=T0.installsize
+) as ROWNUMBER from
+
+                                                                                (  SELECT  top 4  PACKAGENAME , LASTUSE, UNUSEDAYS,PACKAGEGUID,WGUID, INSTALLSIZE
+                                                                                  FROM (Select PACKAGENAME, MOD_DATE, PACKAGEGUID, LASTUSE, DATEDIFF('d', lastuse, now()) AS UNUSEDAYS,WGUID, INSTALLSIZE
+                                                                                  from (Select D.PACKAGEGUID, C.LASTUSE, D.PACKAGENAME, D.MOD_DATE,D.WGUID, D.INSTALLSIZE
+                                                                                  from (select  A.PACKAGEGUID, B.STRVALUE  as PACKAGENAME , A.MOD_DATE ,A.WGUID, A.INSTALLSIZE FROM (SELECT PACKAGEGUID, PACKAGE, MOD_DATE,WGUID, INSTALLSIZE  FROM SASFW) AS A LEFT JOIN SASTR AS B on A.PACKAGE =  B.STRINGID)  AS D  LEFT JOIN SASFWUSE AS C ON C.PACKAGEGUID = D.PACKAGEGUID) as E) as F  WHERE F.UNUSEDAYS >10 
+                                                                                  ORDER BY F.unusedays DESC, F.installsize DESC
+                                                                    ) AS T0) as T0
+Where rownumber = 4
+
+) as T4
+
+on ID.WGUID =T4.WGUID)
+
+
